@@ -17,7 +17,7 @@ server.listen(3000, () => {
   { location: "Greenhills Garden Square, Quezon city", type: "Condominium", price: 17000000, size: 900 },
 ];
 
-function calculateAveragePriceByType(listing) {
+function calculateAveragePriceByType(listing){
   const totalPrice = listing.reduce((account, property) => account + property.price, 0);
   return totalPrice / listing.length;
 }
@@ -26,11 +26,53 @@ function FilbyTyp(listings, type) {
   return listings.filter(property => property.type === type);
 }
  
-function FinLarProp(listings) {
+function FinLarProp(listings){
   return listings.reduce((largest, property) => property.size > largest.size ? property : largest, listing[0]);
 }
+function GruByPriRan( Listings){
+  const PriceRan = {
+    "0 - 1 Million": [],
+    "1 - 5 Million": [],
+    "5 - 10 Million": [],
+    "10 - 15 Million": [],
+    "15 - 20 Million": [],
+  };
 
-console.log("average price:", calculateAveragePriceByType(properties));
-console.log("residential lots:" FilbyTyp(properties, "residential lot"));
-console.log("largest property:" FinLarProp(properties));
+  Listings.forEach(property => {
+    if (property.price < 1000000) {
+      PriRan["0 - 1 million"].push(property);
+    } else if (property.price < 5000000) {
+      PriRan["1 - 5 million"].push(property);
+    } else if (property.price < 10000000) {
+      PriRan["5 - 10 million"].push(property);
+    } else if (property.price < 15000000) {
+      PriRan["10 - 15 million"].push(property);
+    } else {
+       PriRan["15 - 20 million"].push(property);
+    }
+  });
+
+  return PriRa;
+}
+function FetNewList() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const newListings = [
+        { location: "Zone 2, UEP Catarman Northern Samar", type: "House and Lot", price: 1200000, size: 34},
+        { location: "Lucban, Bobon Northern Samar", type: "House and Lot", price: 2000000, size: 39},
+        ];
+      resolve(newListings);
+    }, 2000);
+  });
+}
+       
+
+console.log("Average Price:", calculateAveragePriceByType(properties));
+console.log("Residential Lots:" FilbyTyp(properties, "Residential Lot"));
+console.log("Largest Property:" FinLarProp(properties));
+console.log("Group by Price Range:", GruByPriRan(properties));
+
+FetNewList().then(newProperties => {
+  console.log("Fetched New Listing:", newProperties);
+});
   
